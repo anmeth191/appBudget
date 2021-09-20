@@ -1,10 +1,16 @@
 import React , { useState } from 'react';
 import { Link } from 'react-router-dom';
+import DisplayBills from './displayBills';
+import axios from 'axios';
+import { element } from 'prop-types';
 
 
 
 function CreateBill(){
 //this variable is going to display the days in the select htlm tag when the user selects an option
+
+const [ bill , setBill ] = useState('');
+const [payment , setPayment ] = useState(0); 
 const daysNumbers = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31];
 const monthsNumbers = [1,2,3,4,5,6,7,8,9,10,11,12];
 const weekDays = [' Sunday ',' Monday ' , ' Tuesday ' , ' Wednesday ' , ' Thursday ' , ' Friday ' , ' Saturday '];
@@ -16,11 +22,27 @@ const [weekday , setWeekDay ] = useState('null');
 
 function formSubmitted(event){
     event.preventDefault();
-    console.log('frequency:' + frequency);
-    console.log('status:' + status);
-    console.log('day:'+ day);
-    console.log('month:'+month);
-    console.log('weekday:'+weekday);
+    createPostToServer();
+}
+
+function createPostToServer(){
+
+axios({
+    method:'POST',
+    url:'http://127.0.0.1:8000/createbills',
+    headers:{"Content-Type":"application/json"},
+    data:{ 
+        bill,
+        payment,
+        frequency,
+        status,
+        day,
+        month,
+        weekday
+    }
+}).then( response =>{ console.log( response.data)}).catch( error =>{ console.log(error) })
+
+
 }
     return(
         <div>
@@ -30,14 +52,14 @@ function formSubmitted(event){
                 <form onSubmit={ formSubmitted }>
 
                       <div>
-                          <label htmlFor="bill"> New Bill name </label>
-                          <input type="text" name="bill"/>
+                          <label htmlFor="bill" > New Bill name </label>
+                          <input type="text" name="bill" value={ bill } onChange={(event)=>{ setBill(event.target.value)}}  required/>
                       </div>
 
 
                       <div>
                           <label htmlFor="amount"> Payment Amount </label>
-                          <input type="text" name="amount"/>
+                          <input type="text" name="amount" value={payment} onChange={(event)=>{ setPayment(event.target.value) }} required/>
                       </div>
  
                       
@@ -86,7 +108,7 @@ function formSubmitted(event){
 
                               <div>
                                   <label htmlFor="status">Status:</label>
-                                  <select value={ status } onChange={ (event)=>{ setStatus(event.target.value) }}>
+                                  <select value={ status } onChange={ (event)=>{ setStatus(event.target.value) }} required>
                                       <option value="pending">Pending</option>
                                       <option value="payed">Payed</option>
                                       </select>
@@ -97,6 +119,8 @@ function formSubmitted(event){
                                    </div>
                     </form>
                 </div>
+
+                <DisplayBills />
           
             </div>
     )

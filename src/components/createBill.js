@@ -1,8 +1,6 @@
 import React , { useState } from 'react';
 import { Link } from 'react-router-dom';
-import DisplayBills from './displayBills';
 import axios from 'axios';
-import { element } from 'prop-types';
 
 
 
@@ -19,6 +17,7 @@ const [status , setStatus ] = useState('Pending');
 const [day , setDay ] = useState('null');
 const [month, setMonth ] = useState('null')
 const [weekday , setWeekDay ] = useState('null');
+const [message , setMessage ] = useState('');
 
 function formSubmitted(event){
     event.preventDefault();
@@ -26,7 +25,7 @@ function formSubmitted(event){
 }
 
 function createPostToServer(){
-
+//create the axios request to post the data to the server 
 axios({
     method:'POST',
     url:'http://127.0.0.1:8000/createbills',
@@ -40,13 +39,17 @@ axios({
         month,
         weekday
     }
-}).then( response =>{ console.log( response.data)}).catch( error =>{ console.log(error) })
+}).then( response =>{ setMessage(response.data.message) }).catch( error =>{ console.log(error) })
 
 
 }
     return(
         <div>
             <Link to="/">Home</Link>
+
+             <div>
+              <h1>{message}</h1>
+             </div>
 
             <div>
                 <form onSubmit={ formSubmitted }>
@@ -109,8 +112,8 @@ axios({
                               <div>
                                   <label htmlFor="status">Status:</label>
                                   <select value={ status } onChange={ (event)=>{ setStatus(event.target.value) }} required>
-                                      <option value="pending">Pending</option>
-                                      <option value="payed">Payed</option>
+                                      <option value="Pending">Pending</option>
+                                      <option value="Payed">Payed</option>
                                       </select>
                                   </div>
     
@@ -119,9 +122,6 @@ axios({
                                    </div>
                     </form>
                 </div>
-
-                <DisplayBills />
-          
             </div>
     )
 

@@ -23,7 +23,7 @@ app.get('/' , (request , response) =>{
        response.json({
            message:'Your request has been completed',
            //convert the data from the database to json format 
-           body: JSON.parse(JSON.stringify( results[0]))
+           body: JSON.parse(JSON.stringify(results))
       })
      }//end of the else
    })//end of the query

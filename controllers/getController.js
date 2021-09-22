@@ -11,8 +11,6 @@ const connection = mysql.createConnection({
 
 module.exports = (app)=>{
 
-
- 
 /*This controller is the home controller and it receives a request from the client for all the bills in the database */   
 app.get('/' , (request , response) =>{
     //create the query to check all the bills in the database
@@ -28,4 +26,25 @@ app.get('/' , (request , response) =>{
      }//end of the else
    })//end of the query
   })//end of the get 
+
+
+
+
+app.get('/modifybill', (request , response )=>{ 
+
+  const billModify = parseInt(request.query.id);
+connection.query(`SELECT * FROM bill WHERE id_bill = "${ billModify }"` , (error , result )=>{
+
+  if( error ) throw error;
+  else{
+    response.json({
+     message:'your request has been completed',
+     body: JSON.parse(JSON.stringify(result[0]))
+    })
+
+  }//end of the else
+})//end of the connection
+})//end of the get
+
+
 }//end of the module

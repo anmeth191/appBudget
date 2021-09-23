@@ -14,9 +14,9 @@ const monthsNumbers = [1,2,3,4,5,6,7,8,9,10,11,12];
 const weekDays = [' Sunday ',' Monday ' , ' Tuesday ' , ' Wednesday ' , ' Thursday ' , ' Friday ' , ' Saturday '];
 const [frequency , setFrequency ] = useState('');
 const [status , setStatus ] = useState('Pending');
-const [day , setDay ] = useState('null');
-const [month, setMonth ] = useState('null')
-const [weekday , setWeekDay ] = useState('null');
+const [day , setDay ] = useState(0);
+const [month, setMonth ] = useState(0)
+const [weekday , setWeekDay ] = useState('Sunday');
 const [message , setMessage ] = useState('');
 
 function formSubmitted(event){

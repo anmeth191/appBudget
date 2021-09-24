@@ -9,7 +9,7 @@ function DisplayBills(){
 
     //set the State for the bills coming from the database
 const [bills , setBills ] = useState([]);
-
+const checkDate = new Date();
 //this function makes an http request to the server 
 function getBills(){
     axios.get('http://127.0.0.1:8000/').then( response =>{
@@ -34,6 +34,8 @@ return(
           <li><span>{element.status_payment}</span></li>
           <li><span>{(element.frequency_payment === 'Monthly')?`${element.day_payment}` : (element.frequency_payment === 'Weekly') ? `${element.weekday_payment}` : (element.frequency_payment === 'Yearly') ? `${element.month_payment} / ${element.day_payment}` : 'no date specified '}</span></li>
           </ul>
+          <li>{checkDate.getDate()}</li>
+
         <Link to={`modifybill/${element.id_bill}`}>Modify bill</Link>
         <br />
         <Link to={`deletebill/${element.id_bill}`}>Delete bill</Link>

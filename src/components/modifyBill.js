@@ -15,6 +15,7 @@ function ModifyBill(props){
      const [dayModify , setDayModify ] = useState('');
      const [weekDayModify , setWeekModify ] = useState('Monday');
      const [monthModify , setMonthModify ] = useState('');
+     const [messageServer , setMessageServer ] = useState('');
  
 
      //variables for display the days months and weekdays
@@ -22,6 +23,29 @@ function ModifyBill(props){
      const monthsNumbers = [1,2,3,4,5,6,7,8,9,10,11,12];
      const weekDays = [' Sunday ',' Monday ' , ' Tuesday ' , ' Wednesday ' , ' Thursday ' , ' Friday ' , ' Saturday '];
    
+
+
+     function formSubmit(event){
+         event.preventDefault();
+
+         axios({
+             method:"POST",
+             url:'http://127.0.0.1:8000/modifybill',
+             headers:{"Content-Type":"application/json"},
+             data:{
+                 id,
+                 billName,
+                 billPayment,
+                 billStatus,
+                 billFrequency,
+                 dayModify,
+                 weekDayModify,
+                 monthModify
+             }
+
+         }).then( response => { setMessageServer(response.data.message)}).catch( error =>{ console.log(error)})
+
+     }
 
      useEffect(() => { 
         /*This function creates a get request and then with the response set the values from the database into variables in the client */
@@ -42,13 +66,12 @@ function ModifyBill(props){
     
     }, []);    
 
-    console.log(monthModify)
-
 
 return(
     <div>
         <Link to='/'>Home</Link>
-        <form>
+        <h1>{messageServer}</h1>
+        <form onSubmit={ formSubmit }>
          <div>
              <div>
                  {/* Create the form form and assign in the values the data coming from the database , then setState with the event target and the onchange event*/}
@@ -82,7 +105,11 @@ return(
      <div style={ (billFrequency === 'Monthly' || billFrequency ==='Yearly')?{ display:"block"}:{display:"none"}}>
      <label htmlFor="day_payment">Day Payment: </label>   
      {/*In the select element assign the value of the state coming from the database and then change it to the event value */}
-     <select name="day_payment"  value={ dayModify } onChange={( event )=>{ setDayModify(event.target.value)}}>
+     <select name="day_payment"  value={ dayModify } onChange={( event )=>{ 
+         setDayModify(event.target.value);
+         setWeekModify('No day');
+         setMonthModify(0)
+    }}>
      {/*Display the data in the array using a map to render in the option the elements of the array*/}
      {daysNumbers.map( element =>{ return(<option key={ element }>{element}</option>)  })}
      </select>
@@ -91,7 +118,11 @@ return(
       {/*in this case the style for this element will apply when the frequency is weekly, is the same for the other elements*/}
      <div style={ (billFrequency === 'Weekly')?{display:"block"}:{display:"none"}}>
      <label htmlFor="weekday_payment">Weekday Payment: </label>       
-     <select name="weekday_payment"  value={weekDayModify} onChange={(event)=>{ setWeekModify(event.target.value)}}>
+     <select name="weekday_payment"  value={weekDayModify} onChange={(event)=>{ 
+         setWeekModify(event.target.value);
+         setMonthModify(0);
+         setDayModify(0);
+         }}>
     {/*Display the data in the array using a map to render in the option the elements of the array*/}
      {weekDays.map( element =>{ return(<option value={element} key={ element }>{element}</option>)  })}
      </select>
@@ -101,7 +132,10 @@ return(
       {/*in this case the style for this element will apply when the frequency is Yearly, is the same for the other elements*/}
      <div style={ (billFrequency === 'Yearly' ) ? {display:"block"}:{display:"none"}}>
      <label htmlFor="month_payment">Month Payment: </label>           
-     <select  name="month_payment" value={ monthModify } onChange={(event)=>{ setMonthModify(event.target.value)}   }>
+     <select  name="month_payment" value={ monthModify } onChange={(event)=>{ 
+         setMonthModify(event.target.value);
+         setWeekModify('No day');
+         }}>
       {/*Display the data in the array using a map to render in the option the elements of the array*/}
      {monthsNumbers.map( (element,index) =>{ return(<option key={ index }>{element}</option>)  })}
      </select>
@@ -112,8 +146,6 @@ return(
         <button type="submit">Modify Bill</button>
         </div>  
     </form>
-
-
     </div>
 )//end of the return
 

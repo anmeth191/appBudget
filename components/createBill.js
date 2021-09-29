@@ -113,7 +113,7 @@ axios({
                                   <label htmlFor="status">Status:</label>
                                   <select value={ status } onChange={ (event)=>{ setStatus(event.target.value) }} required>
                                       <option value="Pending">Pending</option>
-                                      <option value="Payed">Payed</option>
+                                    
                                       </select>
                                   </div>
     

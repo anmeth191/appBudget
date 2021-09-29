@@ -29,7 +29,7 @@ function ModifyBill(props){
          event.preventDefault();
 
          axios({
-             method:"POST",
+             method:"PUT",
              url:'http://127.0.0.1:8000/modifybill',
              headers:{"Content-Type":"application/json"},
              data:{

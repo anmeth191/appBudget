@@ -1,9 +1,47 @@
+@import './animation.scss';
+
 .link{
     text-decoration: none;
-    color: black;
+    display: block;
+    color: $textColor-primary;
+}
+.span{
     display: block;
 }
 
-.span{
-    display: block;
+.noDisplay{
+display:none;
+}
+
+//style the buttons in the app
+.button{
+    padding: 0.5rem 2rem ;
+    transition: 0.4s;
+    background: $primaryColor-light;
+    font-weight: 500;
+    border: 0.1rem $textColor-primary solid;
+    position: relative;
+   
+     &::after{
+        content:"";
+        position: absolute;
+        top: 0%;
+        left:0%;
+        z-index: -1;
+        width: 0.1rem;
+        height: 100%;
+        overflow: hidden;
+        animation-duration: 0.51s;
+        animation-fill-mode: forwards;
+    }
+
+    &:hover{
+        cursor: pointer;
+        transform: scale(104%);    }
+
+    &:active::after {
+        width: 100%;
+        animation-name: buttonEffect;
+    }//end of the active 
+    
 }

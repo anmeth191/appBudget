@@ -1,14 +1,47 @@
+@import './variables.scss';
+
 .displayBill{
+  color: $textColor-primary;
+  letter-spacing: 0.3rem;
+  background: $primaryColor-dark;
+  width: 80%;
+  padding: 2rem;
+  margin: 0 auto;
 
 &__container{
-    width: 80%;
+    width: 40%;
     margin: 3rem auto;
-    font-size: 2rem;    
-    border: 0.1rem solid gray;
-    padding: 1rem 3rem;
-    border-radius: 4rem;
     display: grid;
-    grid-template-columns: repeat(2 , minmax(min-content , 1fr));
+    background:$primaryColor ;
+    border-radius: 1rem;
+    overflow: hidden;
+
+    &__infoBill{
+          background: $primaryColor;
+        padding: 2rem;
+        border-bottom: 0.2rem solid $textColor-primary;
+        &--billTitle{
+            font-size: $normalFont;
+            text-transform: uppercase;
+            margin: 1rem 0;
+        }
+     
+        &--amount{display: block;
+             font-size:$LargeFont; 
+             margin: 1rem 0;
+            }
+        &--status{
+             display: block;
+            font-size:$smallFont;
+             margin: 1rem 0;}
+    }//end of the infoBills
+    
+&__settingsLinks{
+font-size: $normalFont;
+background: $primaryColor-light;
+align-self: center;
+padding: 2rem 1rem;
 }
+}//end of the container 
 
 }

@@ -58,7 +58,6 @@ useEffect(() => { getBills(); }, []);
 return(
 
 <div className="displayBill">
-  <CreateBill />
  {
      //map the bills array and display them to the user
   bills.map( element =>{ 
@@ -76,30 +75,19 @@ return(
 
     return(
       <div className={(element.status_payment === "Payed") ? "noDisplay" : "displayBill__container" } key={element.id_bill}>
-          <div className="displayBill__container__infoBill">
-        <h2 className="displayBill__container__infoBill--billTitle">{element.bill_name}</h2>
-        <span className="displayBill__container__infoBill--amount span">Amount: {element.payment_amount}</span>
-        <span className="displayBill__container__infoBill--status span">Status: {element.status_payment}</span>
-        
-        <span className="displayBill__container__infoBill--dueDate span">{(element.frequency_payment === 'Monthly')?`This month on: ${element.day_payment}` : (element.frequency_payment === 'Weekly') ? `This week on: ${element.weekday_payment}` : (element.frequency_payment === 'Yearly') ? `This Year On: ${element.month_payment} / ${element.day_payment}` : 'no date specified '}</span>
-
-        
-        <span style={(element.frequency_payment === 'Monthly') ? {display:'block'} : {display:'none'}}>{(element.day_payment < currentDay && element.status_payment ==='Pending') ? `you are ${dayPaymentReminder} days over due`: (element.status_payment === 'Payed') ? `This bill has been payed` : `${dayPaymentReminder} remaining days`}</span>
-        
-        
-        <span style={(element.frequency_payment === 'Yearly') ? {display:'block'} : {display:'none'}}>{(element.month_payment < currentMonth && element.status_payment ==='Pending') ? `you are ${monthPaymentReminder}  months and ${dayPaymentReminder } days over due`: (element.status_payment === 'Payed') ? 'This bill has been payed' : `${monthPaymentReminder} month remaining`}</span>
-        
-        
+          
+        <div className="displayBill__container__infoBill">
+        <h1 className="displayBill__container__infoBill--billTitle">{element.bill_name}</h1>
+        <h1 className="displayBill__container__infoBill--amount span">$  {element.payment_amount}</h1>
+        <span className="displayBill__container__infoBill--status span"> {element.status_payment}</span>         
         {/* this button calls the function paybills and submit the payment and adjust the status of the bill*/}
-        <button onClick={ ()=>{  
-          payBill(element.id_bill);
-        } }>Pay bill</button>
+        <button className="button" onClick={ ()=>{ /*payBill(element.id_bill);*/} }>Pay bill </button>
         </div>
          
-         <div className="displaBill__container__settingsLinks">
-         <Link className="link" to={`modifybill/${element.id_bill}`}>Modify bill</Link>
-         <Link className="link" to={`deletebill/${element.id_bill}`}>Delete bill</Link>
+         <div className="displayBill__container__settingsLinks">
+         <Link className="link" to={`deletebill/${element.id_bill}`}>View Details</Link>
          </div>
+         
          </div>
     )//end of the return
   })//end of the map

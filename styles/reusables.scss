@@ -19,7 +19,7 @@ display:none;
     transition: 0.4s;
     background: $primaryColor-light;
     font-weight: 500;
-    border: 0.1rem $textColor-primary solid;
+    border: none;
     position: relative;
    
      &::after{

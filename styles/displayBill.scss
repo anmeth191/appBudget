@@ -1,15 +1,60 @@
 @import './variables.scss';
 
+//display the bills in little cards
 .displayBill{
   color: $textColor-primary;
   letter-spacing: 0.3rem;
-  background: $primaryColor-dark;
   width: 80%;
   padding: 2rem;
   margin: 0 auto;
+  
+  &__buttonCreate{
+    display: inline-block;
+    padding: 1rem 2rem;
+    border-radius: 50%;
+      text-align: center;
+      background: none;
+      border: 0.2rem solid $primaryColor;
+      position: relative;
+      cursor: pointer;
+      transition: 0.3s;
 
+      &:hover{
+        background: $primaryColor;
+        color: $textColor-secondary;
+      }
+
+      &::after{
+        content:"";
+
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        height: 7rem;
+        width: 7rem;
+        border-radius: 50%;
+        z-index:-1;    
+        animation-duration: 0.9s;
+        animation-iteration-count: infinite;
+      
+      }
+
+      &:hover::after{
+      animation-name: fadeBackButton;
+       
+      }
+
+   
+
+    &--link{
+      text-decoration: none;
+      color: $primaryColor-dark;
+      font-size: 4rem;
+    }
+  }
 &__container{
-    width: 40%;
+    width: 60%;
     margin: 3rem auto;
     display: grid;
     background:$primaryColor ;
@@ -19,7 +64,6 @@
     &__infoBill{
           background: $primaryColor;
         padding: 2rem;
-        border-bottom: 0.2rem solid $textColor-primary;
         &--billTitle{
             font-size: $normalFont;
             text-transform: uppercase;

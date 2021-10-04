@@ -45,3 +45,67 @@ display:none;
     }//end of the active 
     
 }
+
+
+//style the input texts in the forms
+.inputText{
+    height: 3rem;
+    width: 60%;
+    border: none;
+    transition: 0.2s;
+//add style when the input is focused or selected
+     &:focus{
+         outline: none;
+         border-bottom: 0.4rem solid $validColor;
+//add some styles when the input is invalid in this case it is required 
+//so it is going to display a red border in the bottom in the text field
+       &:invalid{
+           border-bottom: 0.4rem solid $invalidColor;
+       }
+/*This is the same as writing .inputText:focus:invalid "example: or (valid)" and then ~ label 
+the ~ means the global siblings and a + means the adyacent sibling 
+in this case when the text field is displayed then the label (next sibling) is going to 
+show an style defined
+*/
+       &:invalid ~ label{
+           color: $invalidColor;
+           font-size: 1.4rem;
+       } 
+
+       &:valid ~ label{
+        color: $validColor;
+        font-size: 1.4rem;
+    } 
+    }    
+
+
+}
+
+
+/*Add styles to the labels in the text fields*/
+.label{
+     margin-top: 0.5rem;
+    display: block;
+    font-size: 1.6rem ;
+    font-weight: 500;
+    transition: 0.2s;
+}
+
+.select{
+    background: $primaryColor;
+    
+    width: 30%;
+    border: none;
+    color: white;
+    padding: 1rem;
+    transition: 0.3s;
+
+    &__option1{ 
+        
+        display: block;
+        background: $primaryColor-dark;
+        margin-top:1rem ;
+        padding: 2rem;
+ 
+    }
+}

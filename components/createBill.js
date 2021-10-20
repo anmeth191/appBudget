@@ -44,81 +44,81 @@ axios({
 
 }
     return(
-        <div>
-            <Link to="/">Home</Link>
-
-             <div>
-              <h1>{message}</h1>
+        <div className="createBill">
+           
+             <div className="createBill__message">
+              <h1 className="createBill__message--content">{message}</h1>
              </div>
 
-            <div>
-                <form onSubmit={ formSubmitted }>
+            <div className="createBill__form">
+            <div className="createBill__form__title">
+                <h1 className="createBill__form__title-h1">Create new Bill</h1>
+           </div>     
+                <form className="createBill__form__contentForm" onSubmit={ formSubmitted }>
 
-                      <div>
-                          <label htmlFor="bill" > New Bill name </label>
-                          <input type="text" name="bill" value={ bill } onChange={(event)=>{ setBill(event.target.value)}}  required/>
+                      <div className="createBill__form__contentForm__section">
+                          <input className="inputText" type="text" name="bill" value={ bill } onChange={(event)=>{ setBill(event.target.value)}}  required/>
+                          <label className="label" htmlFor="bill" > New Bill name </label>
                       </div>
 
 
-                      <div>
-                          <label htmlFor="amount"> Payment Amount </label>
-                          <input type="text" name="amount" value={payment} onChange={(event)=>{ setPayment(event.target.value) }} required/>
+                      <div className="createBill__form__contentForm__section">
+                          <input className="inputText"  type="number" name="amount" value={payment} onChange={(event)=>{ setPayment(event.target.value) }} required/>
+                          <label className="label" htmlFor="amount"> Payment Amount </label>
                       </div>
  
-                      
-                        
-                      <div>
-                          <label htmlFor="frequency"> Payment Frequency </label>
-                           <select name="frequency"  onChange={ (event)=>{ setFrequency(event.target.value); }}>
-                               <option value="null">Select an option</option>
-                               <option value="Monthly">Monthly</option>
-                               <option value="Yearly">Yearly</option>
-                               <option value="Weekly">Weekly</option>
+                      <div className="createBill__form__contentForm__section">
+                           <select className="select" name="frequency"  onChange={ (event)=>{ setFrequency(event.target.value); }}>
+                               <option className="select__option" value="null">Select an option</option>
+                               <option className="select__option" value="Monthly">Monthly</option>
+                               <option className="select__option" value="Yearly">Yearly</option>
+                               <option className="select__option" value="Weekly">Weekly</option>
                            </select>
+                          <label htmlFor="frequency"> Payment Frequency </label>
                       </div>
 
 
-                      <div style={ frequency === 'Monthly'?{ display:'block'}: frequency === 'Yearly' ? {display:'block'} : { display:' none '}}>
-                          <label htmlFor="dueDay">Select due Day:</label>
-                           <select value={ day } onChange={ (event)=>{ setDay(event.target.value)}}>
+                      <div  className={ frequency ==='Monthly'? "createBill__form__contentForm__section": frequency === 'Yearly' ? "createBill__form__contentForm__section" : "displayNone" }>
+                           <select className="select" value={ day } onChange={ (event)=>{ setDay(event.target.value)}}>
                                {
                                daysNumbers.map( element  =>{ return(<option value={ element } key={element}>{element}</option>)})
                                }
                         </select>
+                        <label htmlFor="dueDay label">Select due Day:</label>
                      </div>
                     
 
-                    <div style={ frequency === 'Weekly' ? {display:'block'}:{ display:'none'}}>
-                        <label htmlFor="due_dayWeek"> Select a due day:</label>
-                        <select  name="due_dayWeek"  value={ weekday } onChange={(event)=>{ setWeekDay(event.target.value)}}>
+                    <div className={ frequency === 'Weekly' ? "createBill__form__contentForm__section" : "displayNone"}>
+                        <select  className="select" name="due_dayWeek"  value={ weekday } onChange={(event)=>{ setWeekDay(event.target.value)}}>
                             <option value="null">Select Day</option>
                             {
                             weekDays.map( element =>{ return( <option value={element } key={element}>{element}</option>)})
                             }  
                         </select>
+                        <label htmlFor="due_dayWeek label"> Select a due day:</label>
                         </div>
 
-                        <div style={ frequency === 'Yearly' ? {display:'block'}:{display:'none'}}>
-                            <label htmlFor="month_dueDate">Select a Month</label>
-                            <select name="month_dueDate" value={ month } onChange={ (event)=>{ setMonth(event.target.value)}}>
+                        <div className={ frequency === 'Yearly' ? "createBill__form__contentForm__section" : "displayNone"}>
+                            <select className="select" name="month_dueDate" value={ month } onChange={ (event)=>{ setMonth(event.target.value)}}>
                             <option value="null">Select Month</option>
                                {
                                    monthsNumbers.map( element => {return( <option value={element} key={element}>{element} </option>)})
                                }
                             </select>
+                            <label htmlFor="month_dueDate label">Select a Month</label>
                             </div>
 
 
-                              <div>
-                                  <label htmlFor="status">Status:</label>
-                                  <select value={ status } onChange={ (event)=>{ setStatus(event.target.value) }} required>
+                              <div className="createBill__form__contentForm__section">
+                                  <select className="select" value={ status } onChange={ (event)=>{ setStatus(event.target.value) }} required>
                                       <option value="Pending">Pending</option>
                                     
                                       </select>
+                                      <label htmlFor="status label">Status:</label>
                                   </div>
     
-                               <div>
-                                   <button type="submit">Create Bill</button>
+                               <div className="createBill__form__contentForm__section">
+                                   <button className="button" type="submit">Create Bill</button>
                                    </div>
                     </form>
                 </div>

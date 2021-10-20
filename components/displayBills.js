@@ -1,7 +1,6 @@
 import React , { useState , useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import CreateBill from './createBill';
 
 /*This component display all the bills or payments in the database*/
 
@@ -58,6 +57,9 @@ useEffect(() => { getBills(); }, []);
 return(
 
 <div className="displayBill">
+<div className="displayBill__buttonCreate">
+ <Link className="displayBill__buttonCreate--link" to="/createbills"> + </Link>
+ </div>
  {
      //map the bills array and display them to the user
   bills.map( element =>{ 
@@ -85,7 +87,7 @@ return(
         </div>
          
          <div className="displayBill__container__settingsLinks">
-         <Link className="link" to={`deletebill/${element.id_bill}`}>View Details</Link>
+         <Link className="link" to={`detailbills/${element.id_bill}`}>View Details</Link>
          </div>
          
          </div>

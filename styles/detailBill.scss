@@ -1,0 +1,30 @@
+.detailBill{
+    height: 100vh;
+   
+    &__container{
+        display: block;
+        padding: 6rem;
+        background: $primaryColor-dark;
+        width: 80%;
+        margin: 3rem auto;
+        text-align: center;
+
+        &__table{
+            width: 100%;
+            
+            &--head{
+                background: $primaryColor;
+                padding: 1rem;
+            }
+            &--data{
+                background: $primaryColor-light;
+                padding: 1rem;
+            }//end of the table data style
+        }//end of the table
+
+        &__buttons{
+            margin-top: 2rem;
+        }
+    }//end of the container
+
+}

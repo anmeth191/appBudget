@@ -34,7 +34,6 @@ function getBills(){
 
 //function is called when user clock the button pay the bill and updates the bill and the payment 
 function payBill(bill_id){
-
 axios({
   method:"PUT",
   url:`http://127.0.0.1:8000/?id=${bill_id}`,

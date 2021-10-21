@@ -16,6 +16,7 @@ function ModifyBill(props){
      const [weekDayModify , setWeekModify ] = useState('Monday');
      const [monthModify , setMonthModify ] = useState('');
      const [messageServer , setMessageServer ] = useState('');
+     const [ billModified , setBillModified ] = useState(false);
  
 
      //variables for display the days months and weekdays
@@ -43,7 +44,11 @@ function ModifyBill(props){
                  monthModify
              }
 
-         }).then( response => { setMessageServer(response.data.message)}).catch( error =>{ console.log(error)})
+         }).then( response => { 
+             setMessageServer(response.data.message);
+             setBillModified(response.data.modified);
+            
+            }).catch( error =>{ console.log(error)})
 
      }
 
@@ -68,44 +73,47 @@ function ModifyBill(props){
 
 
 return(
-    <div>
-        <Link to='/'>Home</Link>
-        <h1>{messageServer}</h1>
-        <form onSubmit={ formSubmit }>
-         <div>
-             <div>
-                 {/* Create the form form and assign in the values the data coming from the database , then setState with the event target and the onchange event*/}
-              <label htmlFor="bill_name">Bill name:  </label>   
-             <input name="bill_name"  type="text" value={ billName } onChange={(event)=>{ setBillName(event.target.value)}}/>  
-             </div>
-             <div>
-             <label htmlFor="bill_amount">Bill amount:</label>    
-             <input  name="bill_amount" type="number" value={ billPayment } onChange={(event)=>{ setBillPayment(event.target.value)}}/>  
+    <div className="modifyBill"> 
+        <div className="modifyBill__form">
+        <div className="modifyBill__form">
+            <div className="modifyBill__form__title">
+                <h1 className="modifyBill__form__title-h1">Modify Bill</h1>
+           </div>     
+
+           <div className={ billModified ? "modifyBill__form__confirmMessage" : "displayNone"}>
+           <h1 className="modifyBill__form__confirmMessage--message">{messageServer}</h1>
+           </div>
+           </div>
+        <form className="modifyBill__form__contentForm" onSubmit={ formSubmit }>
+      
+             <div className="modifyBill__form__contentForm__section">
+            {/* Create the form form and assign in the values the data coming from the database , then setState with the event target and the onchange event*/}
+             <input className="inputText" name="bill_name"  type="text" value={ billName } onChange={(event)=>{ setBillName(event.target.value)}}/>  
+             <label  className="label" htmlFor="bill_name">Bill Name:</label>  
              </div>
 
-             <div>
-                 <select value={billFrequency} onChange={(event)=>{ setBillFrequency(event.target.value)}}>
+
+             <div className="modifyBill__form__contentForm__section"> 
+             <input  className="inputText" name="bill_amount" type="number" value={ billPayment } onChange={(event)=>{ setBillPayment(event.target.value)}}/>  
+             <label  className="label" htmlFor="bill_amount">Bill amount:</label>  
+             </div>
+
+             <div className="modifyBill__form__contentForm__section">
+                 <select id="bill_frequency" className="select" value={billFrequency} onChange={(event)=>{ setBillFrequency(event.target.value)}}>
                      <option value="Monthly">Monthly</option>
                      <option value="Yearly">Yearly</option>
                      <option value="Weekly">Weekly</option>
                  </select>
+                <label  htmlFor="bill_frequency">Payment Frequency:</label>  
              </div>
 
-
-             <div>
-                 <select value={billStatus} onChange={(event)=>{ setBillStatus(event.target.value)}}>
-                     <option value="Pending">Pending</option>
-                     <option value="Payed">Payed</option>
-                 </select>
-             </div>
 
 
      
       {/*in this case the style for this element will apply when the frequency is Monthly or Yearly, is the same for the other elements*/}
-     <div style={ (billFrequency === 'Monthly' || billFrequency ==='Yearly')?{ display:"block"}:{display:"none"}}>
-     <label htmlFor="day_payment">Day Payment: </label>   
+     <div className={ (billFrequency === 'Monthly' || billFrequency ==='Yearly')? "modifyBill__form__contentForm__section": "displayNone"}>
      {/*In the select element assign the value of the state coming from the database and then change it to the event value */}
-     <select name="day_payment"  value={ dayModify } onChange={( event )=>{ 
+     <select  className="select" name="day_payment"  value={ dayModify } onChange={( event )=>{ 
          setDayModify(event.target.value);
          setWeekModify('No day');
          setMonthModify(0)
@@ -113,12 +121,12 @@ return(
      {/*Display the data in the array using a map to render in the option the elements of the array*/}
      {daysNumbers.map( element =>{ return(<option key={ element }>{element}</option>)  })}
      </select>
+     <label  htmlFor="day_payment">Day Payment: </label>   
      </div>
 
       {/*in this case the style for this element will apply when the frequency is weekly, is the same for the other elements*/}
-     <div style={ (billFrequency === 'Weekly')?{display:"block"}:{display:"none"}}>
-     <label htmlFor="weekday_payment">Weekday Payment: </label>       
-     <select name="weekday_payment"  value={weekDayModify} onChange={(event)=>{ 
+     <div className={(billFrequency === 'Weekly')?"modifyBill__form__contentForm__section":"displayNone"}>
+     <select className="select" name="weekday_payment"  value={weekDayModify} onChange={(event)=>{ 
          setWeekModify(event.target.value);
          setMonthModify(0);
          setDayModify(0);
@@ -126,26 +134,38 @@ return(
     {/*Display the data in the array using a map to render in the option the elements of the array*/}
      {weekDays.map( element =>{ return(<option value={element} key={ element }>{element}</option>)  })}
      </select>
+     <label  htmlFor="weekday_payment">Weekday Payment: </label>       
+
      </div>
 
 
       {/*in this case the style for this element will apply when the frequency is Yearly, is the same for the other elements*/}
-     <div style={ (billFrequency === 'Yearly' ) ? {display:"block"}:{display:"none"}}>
-     <label htmlFor="month_payment">Month Payment: </label>           
-     <select  name="month_payment" value={ monthModify } onChange={(event)=>{ 
+     <div className={ (billFrequency === 'Yearly' ) ? "modifyBill__form__contentForm__section":"displayNone"}>
+     <select className="select" name="month_payment" value={ monthModify } onChange={(event)=>{ 
          setMonthModify(event.target.value);
          setWeekModify('No day');
          }}>
       {/*Display the data in the array using a map to render in the option the elements of the array*/}
      {monthsNumbers.map( (element,index) =>{ return(<option key={ index }>{element}</option>)  })}
      </select>
+     <label  htmlFor="month_payment">Month Payment: </label>           
      </div>
-     </div>
+     
 
-    <div>
-        <button type="submit">Modify Bill</button>
+     <div className="modifyBill__form__contentForm__section">
+                 <select id="bill_status" className="select" value={billStatus} onChange={(event)=>{ setBillStatus(event.target.value)}}>
+                     <option value="Pending">Pending</option>
+                     <option value="Payed">Payed</option>
+                 </select>
+                 <label htmlFor="bill_status">Bill Status:</label>  
+             </div>
+
+ 
+    <div className="modifyBill__form__contentForm__section">
+        <button className="button" type="submit">Modify Bill</button>
         </div>  
     </form>
+    </div>
     </div>
 )//end of the return
 

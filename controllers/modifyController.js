@@ -34,7 +34,8 @@ app.put('/modifybill' , (request , response )=>{
                                           if(error) throw error;
                                           else {
                                               response.json({
-                                                  message:'Your bill has been modified successfully '
+                                                  message:'Your bill has been modified',
+                                                  modified:true
                                               })//end of the response json
                                           }//end of the else
                                       })//end of the query

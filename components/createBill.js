@@ -17,6 +17,7 @@ const [day , setDay ] = useState(0);
 const [month, setMonth ] = useState(0)
 const [weekday , setWeekDay ] = useState('Sunday');
 const [message , setMessage ] = useState('');
+const [billCreated , setBillCreated ] = useState(false)
 
 function formSubmitted(event){
     event.preventDefault();
@@ -38,21 +39,27 @@ axios({
         month,
         weekday
     }
-}).then( response =>{ setMessage(response.data.message) }).catch( error =>{ console.log(error) })
-
-
+}).then( response =>{ 
+    setMessage(response.data.message) 
+    setBillCreated(response.data.modified)  
+}).catch( error =>{ console.log(error) })
 }
+
+
+
+
     return(
         <div className="createBill">
-           
-             <div className="createBill__message">
-              <h1 className="createBill__message--content">{message}</h1>
-             </div>
-
+         
             <div className="createBill__form">
             <div className="createBill__form__title">
                 <h1 className="createBill__form__title-h1">Create new Bill</h1>
            </div>     
+
+
+           <div className={ billCreated ? "createBill__form__confirmMessage" : "displayNone"}>
+           <h1 className="createBill__form__confirmMessage--message">{message}</h1>
+           </div>
                 <form className="createBill__form__contentForm" onSubmit={ formSubmitted }>
 
                       <div className="createBill__form__contentForm__section">

@@ -36,12 +36,13 @@ connection.query('SELECT bill_name FROM bill' , (error , result )=>{
       //if the bill is undefined means it does not exist, so we can insert the bill
     if(checkBillExist === undefined){
 
-     connection.query(`INSERT INTO bill (bill_name , payment_amount, frequency_payment, status_payment, day_payment, month_payment, weekday_payment)
-                   VALUES ("${bill}" , ${payment}, "${frequency}", "${status}", "${day}", "${month}", "${weekday}")` , (error , results)=>{
+     connection.query(`INSERT INTO bill (bill_name , payment_amount, frequency_payment, status_payment, day_payment, month_payment, weekday_payment , date_creation)
+                   VALUES ("${bill}" , ${payment}, "${frequency}", "${status}", "${day}", "${month}", "${weekday}" , NOW())` , (error , results)=>{
                          if (error) throw error;
                          else{
                               response.json({
-                              message:'Your bill has been created'
+                              message:'Your bill has been created',
+                              modified:true
                               })
                          }//end of the else
                    });//end of the insert into bill query

@@ -59,6 +59,7 @@ return(
 <div className="displayBill__buttonCreate">
  <Link className="displayBill__buttonCreate--link" to="/createbills"> + </Link>
  </div>
+ <div className="trying">
  {
      //map the bills array and display them to the user
   bills.map( element =>{ 
@@ -93,6 +94,7 @@ return(
     )//end of the return
   })//end of the map
  }
+ </div>
     </div>
 )//end of the return
 }

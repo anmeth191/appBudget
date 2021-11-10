@@ -1,4 +1,5 @@
 const bodyParser = require('body-parser');
+const e = require('express');
 
 const mysql = require('mysql');
 const connection = mysql.createConnection({
@@ -54,18 +55,42 @@ connection.query('SELECT bill_name FROM bill' , (error , result )=>{
     }//end of the if when the value is undefined which means is not in the database
 
 })
-
-
-
-    
 //insert the values into the database
-
-
-
-
-
-
 });//end of the post for create a new bill
 
 
+app.post('/registerclients' , (request , response ) =>{
+
+ const { name } = request.body;
+ const { lastName } = request.body;
+ const { email } = request.body; 
+const { password } = request.body; 
+let emailQuery = '';
+
+//create a query counting if the email is already in th db then the email
+connection.query(`SELECT count(email) AS verifyEmail FROM user WHERE email = '${email}'`,(error, results)=>{
+
+if(error) throw error;
+else{
+     emailQuery = JSON.parse(JSON.stringify(results[0]));
+
+     if(emailQuery.verifyEmail < 1){
+
+     connection.query(`INSERT INTO user(userName, lastName, password , email ) VALUES ('${name}' , '${lastName}','${password}' , '${email}')` , ( error , result )=>{
+               if(error) throw error;
+                 else{
+                    response.json({
+                       message:`user ${name} has been saved into the db`
+                      })
+                    }//end of the else
+                  });//end of the query to the database
+          
+     }else{
+        response.json({
+             message:'this user is already in the database'
+          });
+     }//end of the else
+}//end of the else
+})//end of the query
+})//end of the post to save the users
 }//emd of the module exports

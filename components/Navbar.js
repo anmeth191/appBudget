@@ -15,6 +15,7 @@ return(
                    <li className="navbar__container__links__ul--li"><Link className="navbar__container__links__ul--li--link link" to="/bills">Bills</Link> </li>
                    <li className="navbar__container__links__ul--li"><Link className="navbar__container__links__ul--li--link link" to="/payments">Payments</Link></li>
                    <li className="navbar__container__links__ul--li"><Link className="navbar__container__links__ul--li--link link" to="/profile">Profile</Link> </li>
+                   <li className="navbar__container__links__ul--li"><Link className="navbar__container__links__ul--li--link link" to="/registerclients">Register</Link> </li>
                </ul>
            </div>
         </nav>

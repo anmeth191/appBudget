@@ -93,4 +93,39 @@ else{
 }//end of the else
 })//end of the query
 })//end of the post to save the users
+
+//create the post component whe the users log in
+app.post('/loginclients' , (request , response) =>{
+ 
+     //get the data from the client side when submits the post
+     const { user } = request.body;
+     const { password } = request.body;
+     let userResults = '';
+
+     //create the query to check if the user exist already
+   connection.query(`SELECT id_user ,password , COUNT(email) AS emailVerify FROM user WHERE email = '${user}' GROUP BY id_user`, 
+   (error , results )=>{
+//if the results cominf grom the database are undefined then send an message to the user that it does not exist
+ if( results[0] === undefined){
+      console.log('this user does not exist')
+      //else extraxct the data and convert it to jSON format
+ }else{
+     userResults = JSON.parse(JSON.stringify(results[0]));
+ }
+        //check if the email is equal to 1 which means is true or 0 is false
+       if(userResults.emailVerify >= 1 ){
+        //do the validations
+          if(userResults.password === password ){
+             console.log(`welcome to the page ${user}`);
+          }else{
+               console.log("password is not correct for this user")
+          }//end of the nested else
+      }else{
+        console.log('this user does not exist, please create an account');
+      }
+
+       
+   })
+   
+})//end of the app post login clients
 }//emd of the module exports

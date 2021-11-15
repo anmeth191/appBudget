@@ -6,10 +6,7 @@
 
 &__form{
    
-    width: 60%;
-    margin: 3rem auto;
-    padding: 1rem;
-    background: $primaryColor-dark;
+ 
 
 
     &__title{
@@ -37,17 +34,6 @@
     }
 
 
-    &__contentForm{
-
-        width:70%;
-        margin: 0 auto;
-
-        &__section{
-            padding: 1rem;
-            margin-bottom: 1rem ;  
-
-        }
-    }
 
 }//end of the form
 

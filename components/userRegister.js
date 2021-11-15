@@ -11,7 +11,6 @@ function RegisterClient(){
     const [userPassword , setUserpassword ] = useState('');
     const [repeatPassword , setRepeatpassword ] = useState('');
 
-
 function registerUser(){
 
     axios({
@@ -57,37 +56,38 @@ registerUser();
 return(
     <div>
 <h1>Hello from register the client</h1>
-<form  onSubmit={  submitForm }>
-    <div>
-    <label htmlFor="userName">User name:</label>
-    <input type="text" name="userName" value={ username } onChange={ (event)=>{setUsername(event.target.value)}}  />
+<div className="containerForm">
+<form  className="form" onSubmit={  submitForm }>
+    <div className="formSection"> 
+    <input className="inputText" type="text" name="userName" value={ username } onChange={ (event)=>{setUsername(event.target.value)}}  />
+    <label className="label" htmlFor="userName">User name:</label>
     </div>
     
-    <div>
-    <label htmlFor="userLastname">Lastname</label>
-    <input type="text" name="userLastname" value={ userLastname } onChange={ (event)=>{  setUserlastname(event.target.value)}} />
+    <div className="formSection">
+    <input  className="inputText" type="text" name="userLastname" value={ userLastname } onChange={ (event)=>{  setUserlastname(event.target.value)}} />
+    <label className="label" htmlFor="userLastname">Lastname</label>
     </div>
     
-    <div>
-    <label htmlFor="userEmail">Email</label> 
-    <input type="email" name="userEmail" value={ userEmail } onChange={ (event) =>{ setUseremail(event.target.value)}}/>
+    <div className="formSection">
+    <input  className="inputText" type="email" name="userEmail" value={ userEmail } onChange={ (event) =>{ setUseremail(event.target.value)}}/>
+    <label className="label" htmlFor="userEmail">Email</label> 
     </div>
 
-    <div>
-    <label htmlFor="userPassword">type password:</label>
-    <input type="password" name="userPassword" value={ userPassword }  onChange={(event)=>{setUserpassword(event.target.value)}}/>
+    <div className="formSection">
+    <input className="inputText" type="password" name="userPassword" value={ userPassword }  onChange={(event)=>{setUserpassword(event.target.value)}}/>
+    <label className="label" htmlFor="userPassword">type password:</label>
     </div>
 
-    <div>
-    <label htmlFor="userPassword">Repeat password:</label>
-    <input type="password" name="repeatPassword" value={ repeatPassword }  onChange={(event)=>{setRepeatpassword(event.target.value)}}/>
+    <div className="formSection">
+    <input className="inputText" type="password" name="repeatPassword" value={ repeatPassword }  onChange={(event)=>{setRepeatpassword(event.target.value)}}/>
+    <label className="label" htmlFor="userPassword">Repeat password:</label>
     </div>
 
-<button type="submit">Submit</button>
+<button className="button" type="submit">Submit</button>
 </form>
 
 <Link to="/loginclients">Are you an existing user?</Link>
-
+</div>
 </div>
 )//end of the return
 }//end of register client

@@ -74,8 +74,8 @@ function ModifyBill(props){
 
 return(
     <div className="modifyBill"> 
-        <div className="modifyBill__form">
-        <div className="modifyBill__form">
+       
+        <div className="modifyBill__form containerForm">
             <div className="modifyBill__form__title">
                 <h1 className="modifyBill__form__title-h1">Modify Bill</h1>
            </div>     
@@ -83,22 +83,21 @@ return(
            <div className={ billModified ? "modifyBill__form__confirmMessage" : "displayNone"}>
            <h1 className="modifyBill__form__confirmMessage--message">{messageServer}</h1>
            </div>
-           </div>
-        <form className="modifyBill__form__contentForm" onSubmit={ formSubmit }>
+        <form className="modifyBill__form__contentForm form" onSubmit={ formSubmit }>
       
-             <div className="modifyBill__form__contentForm__section">
+             <div className="modifyBill__form__contentForm__section formSection">
             {/* Create the form form and assign in the values the data coming from the database , then setState with the event target and the onchange event*/}
              <input className="inputText" name="bill_name"  type="text" value={ billName } onChange={(event)=>{ setBillName(event.target.value)}}/>  
              <label  className="label" htmlFor="bill_name">Bill Name:</label>  
              </div>
 
 
-             <div className="modifyBill__form__contentForm__section"> 
+             <div className="modifyBill__form__contentForm__section formSection"> 
              <input  className="inputText" name="bill_amount" type="number" value={ billPayment } onChange={(event)=>{ setBillPayment(event.target.value)}}/>  
              <label  className="label" htmlFor="bill_amount">Bill amount:</label>  
              </div>
 
-             <div className="modifyBill__form__contentForm__section">
+             <div className="modifyBill__form__contentForm__section formSection">
                  <select id="bill_frequency" className="select" value={billFrequency} onChange={(event)=>{ setBillFrequency(event.target.value)}}>
                      <option value="Monthly">Monthly</option>
                      <option value="Yearly">Yearly</option>
@@ -111,7 +110,7 @@ return(
 
      
       {/*in this case the style for this element will apply when the frequency is Monthly or Yearly, is the same for the other elements*/}
-     <div className={ (billFrequency === 'Monthly' || billFrequency ==='Yearly')? "modifyBill__form__contentForm__section": "displayNone"}>
+     <div className={ (billFrequency === 'Monthly' || billFrequency ==='Yearly')? "modifyBill__form__contentForm__section formSection": "displayNone"}>
      {/*In the select element assign the value of the state coming from the database and then change it to the event value */}
      <select  className="select" name="day_payment"  value={ dayModify } onChange={( event )=>{ 
          setDayModify(event.target.value);
@@ -125,7 +124,7 @@ return(
      </div>
 
       {/*in this case the style for this element will apply when the frequency is weekly, is the same for the other elements*/}
-     <div className={(billFrequency === 'Weekly')?"modifyBill__form__contentForm__section":"displayNone"}>
+     <div className={(billFrequency === 'Weekly')?"modifyBill__form__contentForm__section formSection":"displayNone"}>
      <select className="select" name="weekday_payment"  value={weekDayModify} onChange={(event)=>{ 
          setWeekModify(event.target.value);
          setMonthModify(0);
@@ -140,7 +139,7 @@ return(
 
 
       {/*in this case the style for this element will apply when the frequency is Yearly, is the same for the other elements*/}
-     <div className={ (billFrequency === 'Yearly' ) ? "modifyBill__form__contentForm__section":"displayNone"}>
+     <div className={ (billFrequency === 'Yearly' ) ? "modifyBill__form__contentForm__section formSection":"displayNone"}>
      <select className="select" name="month_payment" value={ monthModify } onChange={(event)=>{ 
          setMonthModify(event.target.value);
          setWeekModify('No day');
@@ -152,7 +151,7 @@ return(
      </div>
      
 
-     <div className="modifyBill__form__contentForm__section">
+     <div className="modifyBill__form__contentForm__section formSection">
                  <select id="bill_status" className="select" value={billStatus} onChange={(event)=>{ setBillStatus(event.target.value)}}>
                      <option value="Pending">Pending</option>
                      <option value="Payed">Payed</option>
@@ -161,7 +160,7 @@ return(
              </div>
 
  
-    <div className="modifyBill__form__contentForm__section">
+    <div className="modifyBill__form__contentForm__section formSection">
         <button className="button" type="submit">Modify Bill</button>
         </div>  
     </form>

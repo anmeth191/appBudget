@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 
@@ -46,14 +47,14 @@ return(
            <div className="login__form__contentForm__section formSection">
                <input className="inputText" type="email" id="emailUser" value={ userEmail } onChange={( event ) =>{
                    setUseremail(event.target.value);
-               }}/>
+               }} required/>
                   <label className="label" htmlFor="emailUser">Email</label>
             </div>
 
             <div className="login__form__contentForm__section formSection">
                <input className="inputText" type="password" id="passwordUser" value={ userPassword } onChange={( event ) =>{
                    setUserpassword(event.target.value);
-               }}/>
+               }} required/>
                <label className="label" htmlFor="passwordUser">Password</label>
                
             </div>
@@ -62,6 +63,11 @@ return(
              <button className="login__form__contentForm__section__button--centerButton button" type="submit">login</button>
             </div>
            </form>
+
+        <div className="login__form__messages">
+       <span className="login__form__messages__bottomText">New to this app?  
+       <Link className="login__form__messages__bottomText--link" to="/registerclients">Sign Up </Link></span>
+       </div>
            </div>
     </div>
 )//end of the return 

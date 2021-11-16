@@ -10,6 +10,17 @@ function RegisterClient(){
     const [userEmail , setUseremail ] = useState('');
     const [userPassword , setUserpassword ] = useState('');
     const [repeatPassword , setRepeatpassword ] = useState('');
+    const [messageResponse , setMessageResponse ] = useState('');
+
+    const [labelName , setLabelName ] = useState('First name: ');
+    const [labelLastname , setLabelLastname ] = useState('Last name: ');
+    const [labelPassword , setLabelpassword] = useState('New password: ');
+
+  
+  
+  
+    const patternLetters = /^[a-zA-Z\s]*$/;
+    const patternPassword = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
 
 function registerUser(){
 
@@ -26,7 +37,7 @@ function registerUser(){
             password:userPassword
         }//end of the data
         }).then( response =>{ 
-            console.log(response.data.message)
+            setMessageResponse(response.data.message);
         }).catch( error =>{ console.log(error)})//end of the axios
 
 
@@ -46,47 +57,97 @@ function cleanTextFields(){
 function submitForm(event){
 event.preventDefault();    
 
+
 if(userPassword !== repeatPassword ){
-    console.log('passwords the do not match');
+    setMessageResponse('Passwords Entered do not Match');
+    
+
 } else {
 registerUser();
 }//end of the else
 }//end of the submit form
 
 return(
-    <div>
-<h1>Hello from register the client</h1>
-<div className="containerForm">
-<form  className="form" onSubmit={  submitForm }>
-    <div className="formSection"> 
-    <input className="inputText" type="text" name="userName" value={ username } onChange={ (event)=>{setUsername(event.target.value)}}  />
-    <label className="label" htmlFor="userName">User name:</label>
+    <div className="register">
+
+<div className="register__container  containerForm">
+
+<div className="register__container__message">
+<h1  className="register__container__message--title">Create a new account</h1>
+<span className="register__container__messageResponse">{messageResponse}</span>
+</div>
+
+<form  className=" register__container__form form" onSubmit={  submitForm }>
+    <div className="register__container__form__section formSection"> 
+    <input className="inputText" type="text" name="userName" value={ username } onChange={ 
+        (event)=>{
+            //setUsername(event.target.value);
+            let results = patternLetters.test(event.target.value);
+            if(results === true){
+             setUsername(event.target.value);
+             setLabelName('First name: ')
+            }else{
+              setLabelName('Only letters please');
+            }
+        }//end of the function
+    }//end of the Onchange Event      
+        />
+    <label className="label" htmlFor="userName">{labelName}</label>
     </div>
     
-    <div className="formSection">
-    <input  className="inputText" type="text" name="userLastname" value={ userLastname } onChange={ (event)=>{  setUserlastname(event.target.value)}} />
-    <label className="label" htmlFor="userLastname">Lastname</label>
+    <div className="register__container__form__section formSection">
+    <input  className="inputText" type="text" name="userLastname" value={ userLastname } onChange={ (event)=>{  
+            let results = patternLetters.test(event.target.value);
+
+            if(results === true){
+                setUserlastname(event.target.value);
+                setLabelLastname('Last name: ')
+            }else{
+               setLabelLastname('Only letters');
+            }
+
+
+        }//end of the function
+        }//end of the  
+        />
+    <label className="label" htmlFor="userLastname">{labelLastname}</label>
     </div>
     
-    <div className="formSection">
+    <div className=" register__container__form__section formSection">
     <input  className="inputText" type="email" name="userEmail" value={ userEmail } onChange={ (event) =>{ setUseremail(event.target.value)}}/>
     <label className="label" htmlFor="userEmail">Email</label> 
     </div>
 
-    <div className="formSection">
-    <input className="inputText" type="password" name="userPassword" value={ userPassword }  onChange={(event)=>{setUserpassword(event.target.value)}}/>
-    <label className="label" htmlFor="userPassword">type password:</label>
+    <div className=" register__container__form__section formSection">
+    <input className="inputText" type="password" name="userPassword" value={ userPassword }  onChange={(event)=>{ 
+        
+        let results = patternPassword.test(event.target.value);
+
+        if(results === true){
+            setUserpassword(event.target.value);
+            setLabelpassword('New password: ');
+        }else{
+             setLabelpassword('Min 8 letters, at least a symbol, upper and lower case letters and a number');
+        }//end of the else
+
+        }//end of the function
+        }//end of the onChange
+        />
+    <label className="label" htmlFor="userPassword">{labelPassword}</label>
     </div>
 
-    <div className="formSection">
+    <div className=" register__container__form__section formSection">
     <input className="inputText" type="password" name="repeatPassword" value={ repeatPassword }  onChange={(event)=>{setRepeatpassword(event.target.value)}}/>
     <label className="label" htmlFor="userPassword">Repeat password:</label>
     </div>
 
-<button className="button" type="submit">Submit</button>
+<div className="register__container__form__section__submit formSection">
+<button className="register__container__form__section__submit--button button" type="submit">Sign Up</button>
+<Link className="register__container__form__section__submit--link" to="/loginclients">Already have an account?</Link>
+
+</div>
 </form>
 
-<Link to="/loginclients">Are you an existing user?</Link>
 </div>
 </div>
 )//end of the return

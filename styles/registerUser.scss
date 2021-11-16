@@ -1,0 +1,48 @@
+@import './variables.scss';
+
+
+.register{
+  
+    &__container{
+
+        width: 40%;
+
+        &__message{
+            text-align: center;
+            display: block;
+            width: 60%;
+            margin: 0 auto;
+            padding: 1rem;
+
+        }//end of the message section
+         
+        &__form{
+
+          &__section{
+ 
+            &__submit{
+              padding: 1rem;
+               text-align: center;
+              &--button{
+                  display: block;
+                  margin: 0 auto;
+              }//end of the button
+              
+              &--link{
+                  display: block;
+                  padding: 1rem;
+                  font-size: 1.4rem;
+                  text-decoration: none;
+
+                  &:link , &:visited{
+                      color: black;
+                  }
+              }
+            }//end of the submit container
+
+
+
+          }//end of the section
+        }//end of the form 
+    }//end of the container
+}//end of the register

@@ -13,8 +13,25 @@
         font-size: 1.2rem; 
          color: red;
          padding: 1rem;
+    }//end of the message response style when the server sends back to the user
+    
+    &__bottomText{
+        font-size: 1.4rem;
+
+        &--link{
+            display: inline-block;
+            margin-left: 1rem;
+            text-decoration: none;
+            font-weight: bold;
+
+            &:link, &:visited {
+                color: black;
+            }
+        }//end of the link to to to register
+      
     }
-    }
+
+    }//end of the messages selector 
 
 
     &__contentForm__section__button{

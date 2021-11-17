@@ -84,6 +84,16 @@ show an style defined
     font-size: 1.3rem ;
     font-weight: 500;
     transition: 0.2s;
+    color: black;
+}
+//this style applies when a validation in the field is not correct
+.warningLabel{
+    margin-top: 0.5rem;
+   display: block;
+   font-size: 1.3rem ;
+   font-weight: 500;
+   transition: 0.2s;
+   color: red;
 }
 
 .select{

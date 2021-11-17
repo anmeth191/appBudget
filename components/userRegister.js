@@ -12,15 +12,36 @@ function RegisterClient(){
     const [repeatPassword , setRepeatpassword ] = useState('');
     const [messageResponse , setMessageResponse ] = useState('');
 
-    const [labelName , setLabelName ] = useState('First name: ');
-    const [labelLastname , setLabelLastname ] = useState('Last name: ');
+    const [labelName , setLabelName ] = useState('First name:');
+    const [labelLastname , setLabelLastname ] = useState('Last name:');
     const [labelPassword , setLabelpassword] = useState('New password: ');
 
   
   
-  
+     //these variables are the patterns for check if only text and the password pattern
+     //at least one lower case an upper a numer and also a special char
     const patternLetters = /^[a-zA-Z\s]*$/;
     const patternPassword = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+
+function formValidation(){
+    //we validate the input for the name when the button is clicked and send an warning to user if something is wrong
+    let validateName = patternLetters.test(username);
+    validateName ? setLabelName('First name:'):setLabelName('Only Letters')
+    
+        //we validate the input for the last name when the button is clicked and send an warning to user if something is wrong
+      let validationLastName = patternLetters.test(userLastname);
+      validationLastName ? setLabelLastname('Last name:') : setLabelLastname('Only letters')
+
+
+
+     let validatePassword = patternPassword.test(userPassword);
+     if(validatePassword){ 
+         setLabelpassword('password is good');
+              }else{
+         setLabelpassword('password is not good')
+             };//end of the else
+          }//end of the form validation   
+
 
 function registerUser(){
 
@@ -40,9 +61,7 @@ function registerUser(){
             setMessageResponse(response.data.message);
         }).catch( error =>{ console.log(error)})//end of the axios
 
-
-
-cleanTextFields();
+        cleanTextFields();
 }    
 
 function cleanTextFields(){
@@ -57,14 +76,8 @@ function cleanTextFields(){
 function submitForm(event){
 event.preventDefault();    
 
+formValidation();
 
-if(userPassword !== repeatPassword ){
-    setMessageResponse('Passwords Entered do not Match');
-    
-
-} else {
-registerUser();
-}//end of the else
 }//end of the submit form
 
 return(
@@ -81,36 +94,37 @@ return(
     <div className="register__container__form__section formSection"> 
     <input className="inputText" type="text" name="userName" value={ username } onChange={ 
         (event)=>{
-            //setUsername(event.target.value);
-            let results = patternLetters.test(event.target.value);
-            if(results === true){
-             setUsername(event.target.value);
-             setLabelName('First name: ')
-            }else{
-              setLabelName('Only letters please');
-            }
-        }//end of the function
+            //this variable check the pattern in real time when the user is not entering only letters
+            let internalValidation = patternLetters.test(event.target.value);
+             
+            //check if the validation does not match then change the label content 
+             if(internalValidation === true){ setLabelName('First name:');  
+              //set the value of the field 
+             setUsername(event.target.value); }
+             else{
+                  setLabelName('Only letters'); 
+                };//end of the else       
+            }//end of the function
     }//end of the Onchange Event      
         />
-    <label className="label" htmlFor="userName">{labelName}</label>
+    <label className={(labelName === 'First name:') ? 'label': 'warningLabel'} htmlFor="userName">{labelName}</label>
     </div>
     
     <div className="register__container__form__section formSection">
     <input  className="inputText" type="text" name="userLastname" value={ userLastname } onChange={ (event)=>{  
-            let results = patternLetters.test(event.target.value);
-
-            if(results === true){
-                setUserlastname(event.target.value);
-                setLabelLastname('Last name: ')
-            }else{
-               setLabelLastname('Only letters');
-            }
-
-
-        }//end of the function
+        //this variable check the pattern in real time when the user is not entering only letters
+            let internalValidation = patternLetters.test(event.target.value);     
+        //check if the validation does not match then change the label content 
+             if( internalValidation ){ 
+                 setLabelLastname('Last name:');
+                 setUserlastname(event.target.value); 
+                } else {
+                    setLabelLastname('Only letters');
+                  };
+            }//end of the function
         }//end of the  
         />
-    <label className="label" htmlFor="userLastname">{labelLastname}</label>
+    <label className={(labelLastname === 'Last name:') ? 'label': 'warningLabel'} htmlFor="userLastname">{labelLastname}</label>
     </div>
     
     <div className=" register__container__form__section formSection">
@@ -120,20 +134,11 @@ return(
 
     <div className=" register__container__form__section formSection">
     <input className="inputText" type="password" name="userPassword" value={ userPassword }  onChange={(event)=>{ 
-        
-        let results = patternPassword.test(event.target.value);
-
-        if(results === true){
-            setUserpassword(event.target.value);
-            setLabelpassword('New password: ');
-        }else{
-             setLabelpassword('Min 8 letters, at least a symbol, upper and lower case letters and a number');
-        }//end of the else
-
+         setUserpassword(event.target.value);
         }//end of the function
         }//end of the onChange
         />
-    <label className="label" htmlFor="userPassword">{labelPassword}</label>
+    <label className="label" htmlFor="userPassword">{ labelPassword }</label>
     </div>
 
     <div className=" register__container__form__section formSection">

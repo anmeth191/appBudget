@@ -14,8 +14,9 @@ function RegisterClient(){
 
     const [labelName , setLabelName ] = useState('First name:');
     const [labelLastname , setLabelLastname ] = useState('Last name:');
+    const [labelEmail , setLabelEmail ] = useState('Email:')
     const [labelPassword , setLabelpassword] = useState('New password: ');
-
+    const [labelRepeatpassword , setLabelRepeatpassword ] = useState('Repeat password:')
   
   
      //these variables are the patterns for check if only text and the password pattern
@@ -23,24 +24,66 @@ function RegisterClient(){
     const patternLetters = /^[a-zA-Z\s]*$/;
     const patternPassword = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
 
-function formValidation(){
-    //we validate the input for the name when the button is clicked and send an warning to user if something is wrong
-    let validateName = patternLetters.test(username);
-    validateName ? setLabelName('First name:'):setLabelName('Only Letters')
+function formValidation(){  
+    let verifyPassword = patternPassword.test(userPassword);
+
+   if(username.length <= 0 ){
+       setLabelName('Field is required');
+   }if(userLastname.length <= 0){
+        setLabelLastname('Field is required')
+   }if(userEmail.length <= 0 ){
+       setLabelEmail('Field is required')
+   }if(verifyPassword){
+    setLabelpassword('New password:')
+   }if(!verifyPassword){
+    setLabelpassword('Minimun 8 characters, an uppercase, a lowercase and a special character');
+   }if(repeatPassword.length <= 0 ){
+      setLabelRepeatpassword('Field is required');
+   }if(repeatPassword !== userPassword){
+   setLabelRepeatpassword('Password repeated do not match')
+   }
+
+   const createUserPromise = new Promise((resolve , reject )=>{
+   
+    if(userPassword === repeatPassword && userPassword.length > 0 && verifyPassword && username.length > 0 && userLastname.length > 0){
+        resolve('hello')
+    }else{
+       reject('no hay naa')
+    }
+   })
+
+
+   createUserPromise.then( response =>{ 
+       console.log(response)
+   }).catch( error =>{ console.log(error)})
+
+    // //we validate the input for the name when the button is clicked and send an warning to user if something is wrong
+    // let validateName = patternLetters.test(username);
+    // validateName ? setLabelName('First name:'):setLabelName('Only Letters')
     
-        //we validate the input for the last name when the button is clicked and send an warning to user if something is wrong
-      let validationLastName = patternLetters.test(userLastname);
-      validationLastName ? setLabelLastname('Last name:') : setLabelLastname('Only letters')
+    //     //we validate the input for the last name when the button is clicked and send an warning to user if something is wrong
+    //   let validationLastName = patternLetters.test(userLastname);
+    //   validationLastName ? setLabelLastname('Last name:') : setLabelLastname('Only letters')
 
+    //  let validatePassword = patternPassword.test(userPassword);
+    //  validatePassword ? setLabelpassword('New password:') : setLabelpassword('Minimun 8 characters, an uppercase, number and a special character required')
+           
+    // const createUserPromise = new Promise((resolve , reject )=>{
+ 
+    //     if(validatePassword  && validateName && validationLastName && userPassword === repeatPassword  ){
+    //         resolve('the promise has resolved')
+    //     }else{
+    //         reject('the promise has rejected')
+    //     }
+    // })
+     
 
+    // createUserPromise.then( response =>{ 
+    //     console.log(response)
+    // }).catch( error =>{ console.log( error )})
 
-     let validatePassword = patternPassword.test(userPassword);
-     if(validatePassword){ 
-         setLabelpassword('password is good');
-              }else{
-         setLabelpassword('password is not good')
-             };//end of the else
-          }//end of the form validation   
+    
+    }//end of the form validation   
 
 
 function registerUser(){
@@ -128,8 +171,12 @@ return(
     </div>
     
     <div className=" register__container__form__section formSection">
-    <input  className="inputText" type="email" name="userEmail" value={ userEmail } onChange={ (event) =>{ setUseremail(event.target.value)}}/>
-    <label className="label" htmlFor="userEmail">Email</label> 
+    <input  className="inputText" type="email" name="userEmail" value={ userEmail } onChange={ (event) =>{
+         setUseremail(event.target.value)
+         setLabelEmail('Email:')
+         }}/>
+    
+    <label className="label" htmlFor="userEmail">{labelEmail}</label> 
     </div>
 
     <div className=" register__container__form__section formSection">
@@ -142,8 +189,12 @@ return(
     </div>
 
     <div className=" register__container__form__section formSection">
-    <input className="inputText" type="password" name="repeatPassword" value={ repeatPassword }  onChange={(event)=>{setRepeatpassword(event.target.value)}}/>
-    <label className="label" htmlFor="userPassword">Repeat password:</label>
+    <input className="inputText" type="password" name="repeatPassword" value={ repeatPassword }  onChange={(event)=>{
+        setRepeatpassword(event.target.value)
+        setLabelRepeatpassword('Repeat password:');
+    }//end of the inner function    
+        }/>
+    <label className="label" htmlFor="userPassword">{labelRepeatpassword}</label>
     </div>
 
 <div className="register__container__form__section__submit formSection">

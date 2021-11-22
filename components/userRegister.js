@@ -46,16 +46,12 @@ function formValidation(){
    const createUserPromise = new Promise((resolve , reject )=>{
    
     if(userPassword === repeatPassword && userPassword.length > 0 && verifyPassword && username.length > 0 && userLastname.length > 0){
-        resolve('hello')
+        resolve(true)
     }else{
-       reject('no hay naa')
+       reject(false)
     }
    })
 
-
-   createUserPromise.then( response =>{ 
-       console.log(response)
-   }).catch( error =>{ console.log(error)})
 
     // //we validate the input for the name when the button is clicked and send an warning to user if something is wrong
     // let validateName = patternLetters.test(username);

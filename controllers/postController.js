@@ -1,5 +1,11 @@
 const bodyParser = require('body-parser');
-const e = require('express');
+const session = require('express-session');
+const cookieParser = require('cookie-parser');
+const cors = require('cors');
+//this method allow us to encrypt a password
+
+
+
 
 const mysql = require('mysql');
 const connection = mysql.createConnection({
@@ -11,6 +17,29 @@ const connection = mysql.createConnection({
 
 
 module.exports = (app)=>{
+
+     app.use(cors({
+          origin:['http://localhost:3000/loginclients'],
+          methods:["GET" , "POST"],
+          credentials:false
+     }))
+     app.use(cookieParser());
+     app.use(bodyParser.urlencoded({extended:true}))
+
+     //initialize the session
+     app.use(session({
+          //key is the name of session in this case is mySession
+          key:"mySession",
+          //secret is like the access to my session
+          secret:"secret",
+
+          resave:false,
+          saveUninitialized:false,
+          //cookie is the one that controls the cookie and you set the time by setting  60 seconds *  60 minutes * hours 
+          cookie:{
+               cookieExpire: 60 * 60 * 24
+          }
+     }))
 
 //this controller creates a new bill in the database 
 app.post('/createbills' , (request , response) =>{
@@ -87,7 +116,7 @@ else{
           
      }else{
         response.json({
-             message:'this user is already in the database'
+             message:'this user is already Exist'
           });
      }//end of the else
 }//end of the else
@@ -97,42 +126,46 @@ else{
 //create the post component whe the users log in
 app.post('/loginclients' , (request , response) =>{
  
+
      //get the data from the client side when submits the post
      const { user } = request.body;
      const { password } = request.body;
       let messageUsers = '';
      let userResults = '';
 
+       request.session.mySession = user;
+       console.log(request.session.mySession)
 
-   let myPromise  = new Promise( ( reject , resolve ) => {
 
-     //create the query to check if the user exist already
- connection.query(`SELECT id_user ,password , COUNT(email) AS emailVerify FROM user WHERE email = '${user}' GROUP BY id_user`, 
-   (error , results )=>{
+//    let myPromise  = new Promise( ( reject , resolve ) => {
+
+//      //create the query to check if the user exist already
+//  connection.query(`SELECT id_user ,password , COUNT(email) AS emailVerify FROM user WHERE email = '${user}' GROUP BY id_user`, 
+//    (error , results )=>{
    
-//if the results cominf grom the database are undefined then send an message to the user that it does not exist
-  if( results[0] === undefined){
-       messageUsers =  'This user does not exist';
-       //else extraxct the data and convert it to jSON format
-  }else{
-     userResults = JSON.parse(JSON.stringify(results[0]));
-  }
-         //check if the email is equal to 1 which means is true or 0 is false
-        if(userResults.emailVerify >= 1 ){
-        //do the validations
-           if(userResults.password === password ){
-              messageUsers = `welcome to the page ${user}`;
-           }else{
-                messageUsers = "That's not the right password";
-           }//end of the nested else
-       }else{
-         messageUsers = 'Cannot find user';
-       }
+// //if the results cominf grom the database are undefined then send an message to the user that it does not exist
+//   if( results[0] === undefined){
+//        messageUsers =  'This user does not exist';
+//        //else extraxct the data and convert it to jSON format
+//   }else{
+//      userResults = JSON.parse(JSON.stringify(results[0]));
+//   }
+//          //check if the email is equal to 1 which means is true or 0 is false
+//         if(userResults.emailVerify >= 1 ){
+//         //do the validations
+//            if(userResults.password === password ){
+//               messageUsers = `welcome to the page ${user}`;
+//            }else{
+//                 messageUsers = "That's not the right password";
+//            }//end of the nested else
+//        }else{
+//          messageUsers = 'Cannot find user';
+//        }
 
-response.json({
-message: messageUsers
-})
-})//end of the query ti select the clients 
-})//end of the promise
+// response.json({
+// message: messageUsers
+// })
+// })//end of the query ti select the clients 
+//})//end of the promise
 })//end of the app post login clients
 }//emd of the module exports

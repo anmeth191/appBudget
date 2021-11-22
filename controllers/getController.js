@@ -65,4 +65,21 @@ app.get('/detailbills' , (request , response) =>{
   })//end of the query
 })//end of the get request
 
+
+
+app.get('/loginclients' , (request , response, next) =>{
+
+  request.header('Access-Control-Allow-Origin' , '*');
+
+  response.json({
+    message:"hello from the login clients get request"
+  })
+  
+  })
+
+
+
+
 }//end of the module
+
+

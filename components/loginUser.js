@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-
+//withCredentials,The XMLHttpRequest. withCredentials property is a boolean value that indicates whether
+// or not cross-site Access-Control requests should be made using credentials such as cookies, 
+//authorization headers or TLS client certificates.
+axios.defaults.withCredentials = true;
 
 function LoginUser(){
 
@@ -27,12 +30,22 @@ function requestLogin(){
 }//end of the requestLogin
 
 
+function CheckSession(){
+axios.get('http://127.0.0.1:8000/loginclients').then((response) =>{
+    console.log(response.data)
+}).catch( error =>{ console.log( error )})
+}
+
 
 function submitLogin(event){
   event.preventDefault();
    requestLogin();
 }
 
+
+useEffect(()=>{
+    CheckSession();
+} , [])
 return(
     <div className="login">
     
